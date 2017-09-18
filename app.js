@@ -18,7 +18,10 @@ app.get('/', function (req, res) {
 app.post('/upload', type, function (req,res) {
   console.log(req.body); //form fields
   console.log(req.file); //form files
-  res.status(204).end();
+  
+  var base64image = new Buffer(req.file.buffer).toString('base64');
+  res.send('<img src="data:image/gif;base64,' + base64image + '" style="max-height: 400px; max-width: 400px;" />');
+  //res.status(204).end();
 });
 
 app.listen(3000, function () {

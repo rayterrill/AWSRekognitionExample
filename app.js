@@ -14,7 +14,8 @@ var upload = multer({ storage: storage });
 //allow loading a single file
 var type = upload.single('sampleFile');
 
-var app = express()
+var app = express();
+app.set('view engine', 'pug');
 
 var rekognition = new AWS.Rekognition();
 
@@ -36,16 +37,22 @@ app.post('/upload', type, function (req,res) {
    }
   };
   
+  
   rekognition.detectFaces(params, function(err, data) {
     if (err) {
       console.log(err, err.stack); // an error occurred
     } else {
       //console.log(data);           // successful response
       console.log(data.FaceDetails[0]);
+      var faceDetails = data.FaceDetails[0];
     }
+  
+  //res.send('<img src="data:image/gif;base64,' + base64image + '" style="max-height: 400px; max-width: 400px;" />');
+  var imageSrc = 'data:image/gif;base64,' + base64image;
+  res.render('upload', { title: 'Hey', uploadedImage: imageSrc, low: faceDetails.AgeRange.Low, high: faceDetails.AgeRange.High, smile: faceDetails.Smile, emotion: faceDetails.Emotions[0], beard: faceDetails.Beard});
+  
   });
   
-  res.send('<img src="data:image/gif;base64,' + base64image + '" style="max-height: 400px; max-width: 400px;" />');
   //res.status(204).end();
 });
 

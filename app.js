@@ -4,7 +4,6 @@ var path = require('path');
 //setup aws
 var AWS = require('aws-sdk');
 AWS.config.loadFromPath('./awsconfig.json');
-AWS.config.update({region:'us-west-2'});
 
 //setup multer for file upload
 var multer  = require('multer');
@@ -15,7 +14,7 @@ var upload = multer({ storage: storage });
 var type = upload.single('sampleFile');
 
 var app = express();
-app.set('view engine', 'pug');
+app.set('view engine', 'ejs');
 
 var rekognition = new AWS.Rekognition();
 

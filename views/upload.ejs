@@ -1,0 +1,22 @@
+<html>
+<head>
+   <title><%= title %></title>
+<head>
+<body>
+   <img src="<%= uploadedImage -%>" style="max-height: 400px; max-width: 400px;"/>
+   <table>
+      <tr>
+         <td>Age Range</td><td><%= low %> - <%= high %></td>
+      </tr>
+      <tr>
+         <td>Smiling?</td><td><%= smile.value %> Confidence <%= smile.Confidence %></td>
+      </tr>
+      <tr>
+         <td>Likely Emotion?</td><td><%= emotion.Type %> Confidence <%= emotion.Confidence %></td>
+      </tr>
+      <tr>
+         <td>Beard?</td><td><%= beard.Value %> Confidence <%= beard.Confidence %></td>
+      </tr>
+   </table>
+</body>
+</html>

@@ -3,7 +3,11 @@
    <title><%= title %></title>
 <head>
 <body>
-   <img src="<%= uploadedImage -%>" style="max-height: 400px; max-width: 400px;"/>
+   <div class="demo-container">
+   <canvas id="myCanvas" height="<%= imageHeight %>" width="<%= imageWidth %>" style="max-height: 400px; max-width: 400px; background-image: url(<%= uploadedImage -%>); background-size: contain; background-repeat: no-repeat;">
+   <!--<canvas id="myCanvas" height=400 width=400 style="max-height: 400px; max-width: 400px;">-->
+   <!--<img id="img" src="<%= uploadedImage -%>" style="max-height: 400px; max-width: 400px;"/>-->
+   </div>
    <table>
       <tr>
          <td>Age Range</td><td><%= low %> - <%= high %></td>
@@ -17,6 +21,31 @@
       <tr>
          <td>Beard?</td><td><%= beard.Value %> Confidence <%= beard.Confidence %></td>
       </tr>
+      <tr>
+         <td>Left Eye</td><td><%= leftEye.X %> <%= leftEye.Y %></td>
+      </tr>
+      <tr>
+         <td>Right Eye</td><td><%= rightEye.X %> <%= rightEye.Y %></td>
+      </tr>
+      <tr>
+         <td>Image Dimensions</td><td>Width:<%= imageWidth %> Height:<%= imageHeight %></td>
+      </tr>
    </table>
+<script type="text/javascript">
+var c=document.getElementById("myCanvas");
+var ctx=c.getContext("2d");
+ctx.beginPath();
+
+startX = <%= imageWidth %> * <%= leftEye.X %>;
+startY = <%= imageHeight %> * <%= leftEye.Y %>;
+endX = <%= imageWidth %> * <%= rightEye.X %>;
+endY = <%=imageHeight %> * <%= rightEye.Y %>;
+
+ctx.moveTo(startX,startY);
+ctx.lineTo(endX,endY);
+ctx.lineWidth = 10;
+ctx.strokeStyle = '#ff0000';
+ctx.stroke();
+</script>
 </body>
 </html>
